@@ -1,0 +1,154 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input type="text" placeholder="Select Player" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='redirect($event.option.value.playerID)' [displayWith]="displayFn">
+      <mat-option *ngFor="let option of options | async" [value]="option">
+        {{option.gamerTag}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title *ngIf="player">{{player.gamerTag}}</mat-card-title>
+    <mat-card-subtitle *ngIf="player.name">{{player.name}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+      <mat-list dense>
+        <mat-list-item *ngIf="player.twitterHandle">Twitter: {{player.twitterHandle}} </mat-list-item>
+        <mat-list-item *ngIf="player.twitchStream">Twitch: {{player.twitchStream}} </mat-list-item>
+        <mat-list-item *ngIf="player.state">State: {{player.state}} </mat-list-item>
+        <mat-list-item *ngIf="player.country">Country: {{player.country}} </mat-list-item>
+        <mat-list-item *ngIf="player.region">Region: {{player.region}} </mat-list-item>
+      </mat-list>
+  </mat-card-content>
+</mat-card>
+<mat-accordion>
+  <mat-expansion-panel [expanded]=false>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Sets
+      </mat-panel-title>
+      <mat-panel-description *ngIf="player.gamerTag">
+        Sets that {{player.gamerTag}} has played
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="example-container mat-elevation-z8">
+      <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+      </div>
+
+      <div class="example-table-container">
+
+        <table mat-table [dataSource]="displayedSets" class="example-table"
+                matSort matSortActive="time" matSortDisableClear matSortDirection="desc">
+          
+          <!-- Score Column -->
+          <ng-container matColumnDef="playerScore">
+              <th mat-header-cell *matHeaderCellDef>Score</th>
+              <td mat-cell *matCellDef="let set">{{displayResult(set)}}</td>
+          </ng-container>
+
+          <!-- Opponent Column -->
+          <ng-container matColumnDef="opponentID">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+                Opponent
+            </th>
+            <td mat-cell *matCellDef="let set">{{set.opponentTag}}</td>
+          </ng-container>
+
+          
+          <!-- Tournament Column -->
+          <ng-container matColumnDef="tournamentName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+              Tournament
+            </th>
+            <td mat-cell *matCellDef="let set">{{set.tournamentName}}</td>
+          </ng-container>
+          
+          <!-- Round Column -->
+          <ng-container matColumnDef="round">
+            <th mat-header-cell *matHeaderCellDef>
+                Round
+            </th>
+            <td mat-cell *matCellDef="let set">{{set.phaseName}} - {{set.fullRoundText}}</td>
+          </ng-container>
+
+          <!-- Round Column -->
+          <ng-container matColumnDef="time">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+                  Date
+              </th>
+              <td mat-cell *matCellDef="let set">{{set.time * 1000 | date}}</td>
+            </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr [ngStyle]="{'background-colour': 'green'}" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+      <mat-paginator [length]="sets.length" [pageSize]="20" [pageSizeOptions] = "['5', '10', '20', '100']" [showFirstLastButtons]="true"></mat-paginator>
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel [expanded]=false>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Head-To-Head
+      </mat-panel-title>
+      <mat-panel-description>
+        How does {{player.gamerTag}} compare to other players?
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <table mat-table 
+          [dataSource]="globalHeadToHead" 
+          multiTemplateDataRows 
+          class="mat-elevation-z8">
+
+      <!-- Rank Column -->
+      <ng-container matColumnDef="miomRank">
+        <th mat-header-cell *matHeaderCellDef>MIOM Rank 2017</th>
+        <td mat-cell *matCellDef="let set">{{set.miomRank}}</td>
+      </ng-container>
+
+      <!-- Record 2018 Column -->
+      <ng-container matColumnDef="record2018">
+        <th mat-header-cell *matHeaderCellDef>Record 2018</th>
+        <td mat-cell *matCellDef="let set">{{set.playerRecord2018}} - {{set.opponentRecord2018}}</td>
+      </ng-container>
+
+      <!-- Record Column -->
+      <ng-container matColumnDef="record">
+        <th mat-header-cell *matHeaderCellDef>Record Overall</th>
+        <td mat-cell *matCellDef="let set">{{set.playerRecord}} - {{set.opponentRecord}}</td>
+      </ng-container>
+
+      <!-- Record Column -->
+      <ng-container matColumnDef="opponentTag">
+        <th mat-header-cell *matHeaderCellDef>Opponent</th>
+        <td mat-cell *matCellDef="let set">{{set.opponentTag}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let set" [attr.colspan]="displayedColumnsH2H.length">
+            <div class="example-set-detail" [@detailExpand]="set == expandedSet ? 'expanded' : 'collapsed'">
+              <mat-list dense>
+                  <h3 mat-subheader>Set History</h3>
+                <mat-list-item *ngFor="let seth of set.sets">{{displayResult(seth)}} / {{seth.tournamentName}} / {{seth.phaseName}} - {{seth.fullRoundText}} / {{seth.time * 1000 | date}} </mat-list-item>
+              </mat-list>
+            </div>
+          </td>
+        </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsH2H"></tr>
+      <tr mat-row *matRowDef="let set; columns: displayedColumnsH2H;"
+          class="example-set-row"
+          (click)="expandedSet = expandedSet !== set ? set : null">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </table>
+
+  </mat-expansion-panel>
+</mat-accordion>

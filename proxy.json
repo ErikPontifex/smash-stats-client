@@ -1,0 +1,6 @@
+{
+    "/api/*": {
+        "target": "https://smash-stats-server.herokuapp.com",
+        "secure": "false"
+    }
+}
