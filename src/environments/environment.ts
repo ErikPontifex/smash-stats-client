@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
 
-  apiUrl: 'https://smash-stats-server.herokuapp.com'
+  apiUrl: 'localhost:3000'
 };
 
 /*
