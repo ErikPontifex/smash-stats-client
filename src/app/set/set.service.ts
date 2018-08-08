@@ -5,6 +5,7 @@ import { Set } from "./set.model";
 import { environment } from '../../environments/environment';
 
 const API_URL = environment.apiUrl;
+
 @Injectable()
 export class SetService {
     constructor(private http: HttpClient) {}
@@ -14,7 +15,6 @@ export class SetService {
     }
 
     getSets(playerID: Number, sort: string, order: string, page: number): Observable<Set[]> {
-        console.log('requesting sets for player ' + playerID);
         return this.http.get<Set[]>(`${API_URL}/api/player/${playerID}/getSets/${sort}/${order}/${page}`, {});
     }
 }

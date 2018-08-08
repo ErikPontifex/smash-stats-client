@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-
-  apiUrl: 'localhost:3000'
+  
+  // url is handled by proxy.json
+  apiUrl: ''
 };
 
 /*

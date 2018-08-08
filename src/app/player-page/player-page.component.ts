@@ -199,6 +199,7 @@ export class PlayerPageComponent implements OnInit {
     this.isLoadingResults = true;
     this.setService.getAllSetsForPlayer(this.player.playerID).subscribe(sets => {
       this.sets = sets;
+      console.log(this.sets.slice(this.sets.length-10, this.sets.length));
       this.pruneSets();
       this.isLoadingResults = false;
       this.getSetsToDisplay();
