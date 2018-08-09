@@ -38,57 +38,7 @@
       <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
         <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
       </div>
-
-      <div class="example-table-container">
-
-        <table mat-table [dataSource]="displayedSets" class="example-table"
-                matSort matSortActive="time" matSortDisableClear matSortDirection="desc">
-          
-          <!-- Score Column -->
-          <ng-container matColumnDef="playerScore">
-              <th mat-header-cell *matHeaderCellDef>Score</th>
-              <td mat-cell *matCellDef="let set">{{displayResult(set)}}</td>
-          </ng-container>
-
-          <!-- Opponent Column -->
-          <ng-container matColumnDef="opponentID">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-                Opponent
-            </th>
-            <td mat-cell *matCellDef="let set">{{set.opponentTag}}</td>
-          </ng-container>
-
-          
-          <!-- Tournament Column -->
-          <ng-container matColumnDef="tournamentName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-              Tournament
-            </th>
-            <td mat-cell *matCellDef="let set">{{set.tournamentName ? set.tournamentName : set.TournamentName}}</td>
-          </ng-container>
-          
-          <!-- Round Column -->
-          <ng-container matColumnDef="round">
-            <th mat-header-cell *matHeaderCellDef>
-                Round
-            </th>
-            <td mat-cell *matCellDef="let set">{{set.phaseName}} - {{set.fullRoundText}}</td>
-          </ng-container>
-
-          <!-- Round Column -->
-          <ng-container matColumnDef="time">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-                  Date
-              </th>
-              <td mat-cell *matCellDef="let set">{{set.time * 1000 | date}}</td>
-            </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr [ngStyle]="{'background-colour': 'green'}" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </div>
-
-      <mat-paginator [length]="sets.length" [pageSize]="20" [pageSizeOptions] = "['5', '10', '20', '100']" [showFirstLastButtons]="true"></mat-paginator>
+      <set-table [sets]="sets"></set-table>
     </div>
   </mat-expansion-panel>
   <mat-expansion-panel [expanded]=false>
@@ -104,13 +54,20 @@
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter By Opponent">
     </mat-form-field>
     <table mat-table 
-          [dataSource]="globalHeadToHeadDataSource" 
-          multiTemplateDataRows 
-          class="mat-elevation-z8">
+           matSort matSortActive="mpgrRank" matSortDisableClear matSortDirection="asc"
+           [dataSource]="globalHeadToHeadDataSource" 
+           multiTemplateDataRows 
+           class="mat-elevation-z8">
+
+      <!-- Rank Column -->
+      <ng-container matColumnDef="mpgrRank">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>MPGR Summer 2018</th>
+        <td mat-cell *matCellDef="let set">{{set.mpgrRank}}</td>
+      </ng-container>
 
       <!-- Rank Column -->
       <ng-container matColumnDef="miomRank">
-        <th mat-header-cell *matHeaderCellDef>MIOM Rank 2017</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>MIOM Rank 2017</th>
         <td mat-cell *matCellDef="let set">{{set.miomRank}}</td>
       </ng-container>
 

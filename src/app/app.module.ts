@@ -20,6 +20,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import { AboutPageComponent } from './about-page/about-page.component';
 import { JsonpModule } from '@angular/http';
+import { SetTableComponent } from './set-table/set-table.component';
+import { HeadToHeadTableComponent } from './head-to-head-table/head-to-head-table.component';
 
 
 const routes: Routes = [
@@ -34,7 +36,9 @@ const routes: Routes = [
     AppComponent,
     PlayerPageComponent,
     SetCardComponent,
-    AboutPageComponent
+    AboutPageComponent,
+    SetTableComponent,
+    HeadToHeadTableComponent
   ],
   imports: [
     BrowserModule,

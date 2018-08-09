@@ -120,6 +120,60 @@ let miom = {
   7072:   {   rank: 104,  tag: 'Vro'            }
 }
 
+let mpgr = {
+  1004:   {   rank: 1,    tag: 'Hungrybox'      },
+  15990:  {   rank: 2,    tag: 'Plup'           },
+  6189:   {   rank: 3,    tag: 'Armada'         },
+  4465:   {   rank: 4,    tag: 'Leffen'         },
+  1003:   {   rank: 5,    tag: 'Mew2King'       },
+  1000:   {   rank: 6,    tag: 'Mang0'          },
+  1028:   {   rank: 7,    tag: 'Wizzrobe'       }, 
+  1021:   {   rank: 8,   tag: 'aMSa'           }, 
+  6126:   {   rank: 9,   tag: 'Zain'           }, 
+  16342:  {   rank: 10,    tag: 'Axe'            },
+  1019:   {   rank: 11,    tag: 'SFAT'           }, 
+  4401:   {   rank: 12,   tag: 'Crush'          }, 
+  1017:   {   rank: 13,   tag: 'S2J'            }, 
+  13932:  {   rank: 14,   tag: 'Lucky'          }, 
+  1036:   {   rank: 15,   tag: 'HugS'           }, 
+  1055:   {   rank: 16,   tag: 'Swedish Delight'}, 
+  1012:   {   rank: 17,   tag: 'PewPewU'        }, 
+  1008:   {   rank: 18,   tag: 'Westballz'      }, 
+  4107:   {   rank: 19,   tag: 'n0ne'           }, 
+  1037:   {   rank: 20,   tag: 'Duck'           }, 
+  15634:  {   rank: 21,   tag: 'lloD'           },
+  37339:  {   rank: 22,   tag: 'AbsentPage'     },
+  4111:   {   rank: 23,   tag: 'Ryan Ford'      },
+  3560:   {   rank: 24,   tag: 'KJH'            },
+  1013:   {   rank: 25,   tag: 'Shroomed'       }, 
+  23458:  {   rank: 26,   tag: 'ARMY'           },
+  4507:   {   rank: 27,   tag: 'La Luna'        }, 
+  39966:  {   rank: 28,   tag: 'Syrox'          },
+  22900:  {   rank: 29,   tag: 'Trif'           },
+  4824:   {   rank: 30,   tag: 'Captain Smuckers'},
+  1009:   {   rank: 31,   tag: 'Colbol'         },
+  19554:  {   rank: 32,   tag: 'iBDW'           },
+  46827:  {   rank: 33,   tag: 'Bananas'        },
+  3561:   {   rank: 34,   tag: 'Ginger'         },
+  19573:  {   rank: 35,   tag: 'Ice'            },
+  13306:  {   rank: 36,   tag: 'Rishi'          },
+  4721:   {   rank: 37,   tag: 'Mike Haze'      },
+  1032:   {   rank: 38,   tag: 'Bladewise'      },
+  3359:   {   rank: 39,   tag: 'Captain Faceroll'},
+  5620:   {   rank: 40,   tag: 'Junebug'        },
+  1039:   {   rank: 41,   tag: 'Kalamazhu'      },
+  20995:  {   rank: 42,   tag: '2Saint'         },
+  1061:   {   rank: 43,   tag: 'Slox'           },
+  1077:   {   rank: 44,   tag: 'Gahtzu'         },
+  26605:  {   rank: 45,   tag: 'Michael'        },
+  5080:   {   rank: 46,   tag: 'Moky'           },
+  260408: {   rank: 47,   tag: 'Santi'          },
+  5563:   {   rank: 48,   tag: 'Professor Pro'  },
+  40476:  {   rank: 49,   tag: 'Medz'           },
+  22556:  {   rank: 50,   tag: 'Overtriforce'   },
+
+}
+
 @Component({
   selector: 'app-player-page',
   templateUrl: './player-page.component.html',
@@ -150,11 +204,11 @@ export class PlayerPageComponent implements OnInit {
   globalHeadToHead = [];
   globalHeadToHeadDataSource: MatTableDataSource<any>;
 
-  displayedColumns: string[] = ['playerScore', 'opponentID', 'tournamentName', 'round', 'time'];
-  displayedColumnsH2H: string[] = ['miomRank', 'record2018', 'record', 'opponentTag'];
+  
+  displayedColumnsH2H: string[] = ['mpgrRank', 'miomRank', 'record2018', 'record', 'opponentTag'];
 
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private setService: SetService,
@@ -182,14 +236,15 @@ export class PlayerPageComponent implements OnInit {
       this.initializePlayer(this.playerID);
     });
     
-    merge(this.paginator.page, this.sort.sortChange).subscribe(event => {
+    merge(this.sort.sortChange).subscribe(event => {
+      console.log(event);
       this.getSetsToDisplay();
     });
   }
 
   initializePlayer(playerID: Number) {
     console.log('initializing player ' + playerID);
-    this.paginator.firstPage();
+    // this.paginator.firstPage();
     this.playerService.getPlayer(playerID).subscribe(player => {
       this.player = player;
       this.getAllSets();
@@ -209,21 +264,21 @@ export class PlayerPageComponent implements OnInit {
   }
 
   getSetsToDisplay() {
-    let index = this.paginator.pageIndex;
-    let size = this.paginator.pageSize;
-    let sort = this.sort.active;
-    let sortOrder = this.sort.direction;
+    // let index = this.paginator.pageIndex;
+    // let size = this.paginator.pageSize;
+    // let sort = this.sort.active;
+    // let sortOrder = this.sort.direction;
 
-    this.sets = this.sets.sort((set1: Set, set2: Set) => {
-      if ((set1[sort] > set2[sort] && sortOrder === 'asc') || (set1[sort] < set2[sort] && sortOrder === 'desc')) {
-        return 1;
-      }
-      if ((set1[sort] < set2[sort] && sortOrder === 'asc') || (set1[sort] > set2[sort] && sortOrder === 'desc')) {
-        return -1;
-      }
-    });
+    // this.sets = this.sets.sort((set1: Set, set2: Set) => {
+    //   if ((set1[sort] > set2[sort] && sortOrder === 'asc') || (set1[sort] < set2[sort] && sortOrder === 'desc')) {
+    //     return 1;
+    //   }
+    //   if ((set1[sort] < set2[sort] && sortOrder === 'asc') || (set1[sort] > set2[sort] && sortOrder === 'desc')) {
+    //     return -1;
+    //   }
+    // });
 
-    this.displayedSets = this.sets.slice(index*size, (index+1)*size);
+    // this.displayedSets = this.sets.slice(index*size, (index+1)*size);
 
   }
 
@@ -271,7 +326,8 @@ export class PlayerPageComponent implements OnInit {
       opponentRecord: 0,
       playerRecord2018: 0,
       opponentRecord2018: 0,
-      miomRank: miom[sets[0]!.opponentID] ? miom[sets[0]!.opponentID].rank : 'unranked'
+      miomRank: miom[sets[0]!.opponentID] ? miom[sets[0]!.opponentID].rank : 'unranked',
+      mpgrRank: mpgr[sets[0]!.opponentID] ? mpgr[sets[0]!.opponentID].rank : 'unranked'
     }
 
     for (let i = 0; i < sets.length; i++) {
@@ -300,14 +356,12 @@ export class PlayerPageComponent implements OnInit {
           opponentRecord: 0,
           playerRecord2018: 0,
           opponentRecord2018: 0,
-          miomRank: sets[i+1] ? (miom[sets[i+1]!.opponentID] ? miom[sets[i+1]!.opponentID].rank : 'unranked') : ''
+          miomRank: sets[i+1] ? (miom[sets[i+1]!.opponentID] ? miom[sets[i+1]!.opponentID].rank : 'unranked') : '',
+          mpgrRank: sets[i+1] ? (mpgr[sets[i+1]!.opponentID] ? mpgr[sets[i+1]!.opponentID].rank : 'unranked') : ''
+
         }
       }      
     }
-
-    // console.log('Head to head:');
-    // console.log(this.globalHeadToHead);
-
     this.globalHeadToHead = this.globalHeadToHead.sort((a, b) => {
       let oppA = miom[a.opponentID] ? miom[a.opponentID].rank : Infinity;
       let oppB = miom[b.opponentID] ? miom[b.opponentID].rank : Infinity;
@@ -318,6 +372,18 @@ export class PlayerPageComponent implements OnInit {
         return -1;
       }
     });
+
+    this.globalHeadToHead = this.globalHeadToHead.sort((a, b) => {
+      let oppA = mpgr[a.opponentID] ? mpgr[a.opponentID].rank : Infinity;
+      let oppB = mpgr[b.opponentID] ? mpgr[b.opponentID].rank : Infinity;
+      if (oppA > oppB) {
+        return 1;
+      }
+      if (oppA < oppB) {
+        return -1;
+      }
+    });
+
 
     this.globalHeadToHeadDataSource = new MatTableDataSource(this.globalHeadToHead);
 
