@@ -9,7 +9,7 @@ import { auditTime} from 'rxjs/operators';
 import {Location} from "@angular/common";
 
 import { Player } from '../player/player.model';
-import { MatPaginator, MatSort } from '../../../node_modules/@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource } from '../../../node_modules/@angular/material';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 
@@ -148,6 +148,7 @@ export class PlayerPageComponent implements OnInit {
   displayedSets: Set[] = [];
   player: Player;
   globalHeadToHead = [];
+  globalHeadToHeadDataSource: MatTableDataSource<any>;
 
   displayedColumns: string[] = ['playerScore', 'opponentID', 'tournamentName', 'round', 'time'];
   displayedColumnsH2H: string[] = ['miomRank', 'record2018', 'record', 'opponentTag'];
@@ -318,6 +319,8 @@ export class PlayerPageComponent implements OnInit {
       }
     });
 
+    this.globalHeadToHeadDataSource = new MatTableDataSource(this.globalHeadToHead);
+
     this.isLoadingHeadToHeadResults = false;
   }
 
@@ -334,6 +337,10 @@ export class PlayerPageComponent implements OnInit {
     } else {
       return set.playerScore + " - " + set.opponentScore;
     }
+  }
+
+  applyFilter(filterValue: string) {
+    this.globalHeadToHeadDataSource.filter = filterValue.trim().toLocaleLowerCase();
   }
 
 

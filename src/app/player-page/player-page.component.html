@@ -100,9 +100,11 @@
         How does {{player.gamerTag}} compare to other players?
       </mat-panel-description>
     </mat-expansion-panel-header>
-
+    <mat-form-field class="example-full-width">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter By Opponent">
+    </mat-form-field>
     <table mat-table 
-          [dataSource]="globalHeadToHead" 
+          [dataSource]="globalHeadToHeadDataSource" 
           multiTemplateDataRows 
           class="mat-elevation-z8">
 
