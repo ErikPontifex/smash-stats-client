@@ -3,7 +3,6 @@ import { MatTableDataSource, MatSort } from '../../../node_modules/@angular/mate
 import { Set } from '../set/set.model';
 import { miom, mpgr } from '../rankings/rankings';
 import { HeadToHead } from '../head-to-head/head-to-head.model';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'head-to-head-table',
@@ -65,8 +64,25 @@ export class HeadToHeadTableComponent implements OnInit {
       mpgrRank: mpgr[sets[0]!.opponentID] ? mpgr[sets[0]!.opponentID].rank : 'unranked'
     });
 
+    
+    let year = new Date(sets[0].time * 1000).getFullYear();
+    // console.log(sets[0].time * 1000);
+    // console.log('year is ' + year);
+    // console.log(sets[0]);
+    // // headToHead.sets[year] = [];
+    // console.log(typeof headToHead.sets['2016'])
+    // headToHead.sets['2016'].push(sets[0]);
+
+    // console.log(headToHead);
+
     for (let i = 0; i < sets.length; i++) {
       const set = sets[i];
+      let yearTemp = new Date(sets[i].time * 1000).getFullYear();
+      if (year !== yearTemp) {
+        year = yearTemp;
+        headToHead.sets[year] = [];
+      }
+      
       if (set.winnerID == this.playerID) {
         headToHead.playerRecord++;
         if (set.time > new Date('January 1, 2018 00:00:00 GMT+00:00').getTime()/1000) {
@@ -79,10 +95,11 @@ export class HeadToHeadTableComponent implements OnInit {
           headToHead.opponentRecord2018++;
         }
       }
-      headToHead.sets.push(set);
+      headToHead.sets[year].push(set);
 
       if (i+1 === sets.length || sets[i+1].opponentID !== headToHead.opponentID) {
         this.globalHeadToHead.push(headToHead);
+        console.log(headToHead);
         headToHead = new HeadToHead({
           opponentID: sets[i+1] ? sets[i+1].opponentID : 0,
           opponentTag: sets[i+1] ? (miom[sets[i+1].opponentID] ? miom[sets[i+1].opponentID].tag  : sets[i+1].opponentTag) : '',
