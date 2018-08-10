@@ -16,6 +16,10 @@ table {
   max-width: 124px;
 }
 
+.mat-list {
+  display: block;
+}
+
 .example-set-detail {
     overflow: hidden;
     display: flex;

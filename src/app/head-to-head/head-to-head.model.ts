@@ -2,7 +2,7 @@ import { Set } from "../set/set.model";
 
 export class HeadToHead {
 
-    sets: Set[];
+    sets: {2018: Set[], 2017: Set[], 2016: Set[], 2015: Set[]};
     opponentID: number;
     opponentTag: string;
     playerRecord: number;
@@ -13,7 +13,7 @@ export class HeadToHead {
     mpgrRank: number | string;
 
     constructor(obj?: any) {
-        this.sets               = obj && obj.sets               || [],
+        this.sets               = obj && obj.sets               || {2018: [], 2017: [], 2016: [], 2015: []},
         this.opponentID         = obj && obj.opponentID         || '',
         this.opponentTag        = obj && obj.opponentTag        || '',
         this.playerRecord       = obj && obj.playerRecord       || 0,

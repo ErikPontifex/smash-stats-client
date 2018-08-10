@@ -9,21 +9,7 @@
   </mat-form-field>
 </form>
 
-<mat-card>
-  <mat-card-header>
-    <mat-card-title *ngIf="player">{{player.gamerTag}}</mat-card-title>
-    <mat-card-subtitle *ngIf="player.name">{{player.name}}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-      <mat-list dense>
-        <mat-list-item *ngIf="player.twitterHandle">Twitter: {{player.twitterHandle}} </mat-list-item>
-        <mat-list-item *ngIf="player.twitchStream">Twitch: {{player.twitchStream}} </mat-list-item>
-        <mat-list-item *ngIf="player.state">State: {{player.state}} </mat-list-item>
-        <mat-list-item *ngIf="player.country">Country: {{player.country}} </mat-list-item>
-        <mat-list-item *ngIf="player.region">Region: {{player.region}} </mat-list-item>
-      </mat-list>
-  </mat-card-content>
-</mat-card>
+<player-overview [player]="player"></player-overview>
 <mat-accordion>
   <mat-expansion-panel [expanded]=false>
     <mat-expansion-panel-header>
@@ -41,7 +27,7 @@
       <set-table [sets]="sets"></set-table>
     </div>
   </mat-expansion-panel>
-  <mat-expansion-panel [expanded]=false>
+  <mat-expansion-panel [expanded]=true>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Head-To-Head

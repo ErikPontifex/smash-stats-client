@@ -22,6 +22,7 @@ import { AboutPageComponent } from './about-page/about-page.component';
 import { JsonpModule } from '@angular/http';
 import { SetTableComponent } from './set-table/set-table.component';
 import { HeadToHeadTableComponent } from './head-to-head-table/head-to-head-table.component';
+import { PlayerOverviewComponent } from './player-overview/player-overview.component';
 
 
 const routes: Routes = [
@@ -38,7 +39,8 @@ const routes: Routes = [
     SetCardComponent,
     AboutPageComponent,
     SetTableComponent,
-    HeadToHeadTableComponent
+    HeadToHeadTableComponent,
+    PlayerOverviewComponent
   ],
   imports: [
     BrowserModule,
