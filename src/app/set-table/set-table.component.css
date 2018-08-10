@@ -16,4 +16,12 @@
 
 table {
     width: 100%;
-  }
+}
+
+.lightGreen {
+  background-color: lightgreen
+}
+
+.lightRed {
+  background-color: lightcoral;
+}

@@ -25,7 +25,7 @@
       <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
         <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
       </div>
-      <set-table [sets]="sets"></set-table>
+      <set-table [sets]="sets" [playerID]="playerID"></set-table>
     </div>
   </mat-expansion-panel>
   <mat-expansion-panel [expanded]=true>

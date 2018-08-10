@@ -10,6 +10,7 @@ import { Set } from '../set/set.model';
 })
 export class SetTableComponent implements OnInit {
   @Input() sets;
+  @Input() playerID;
   
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -56,6 +57,14 @@ export class SetTableComponent implements OnInit {
       return set.opponentID === set.loserID ? 'won' : 'lost';
     } else {
       return set.playerScore + " - " + set.opponentScore;
+    }
+  }
+
+  getCellColor(set){
+    if (set.winnerID == this.playerID) {
+      return 'lightGreen';
+    } else {
+      return 'lightRed';
     }
   }
 

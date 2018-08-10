@@ -6,7 +6,7 @@
     <!-- Score Column -->
     <ng-container matColumnDef="playerScore">
         <th mat-header-cell *matHeaderCellDef>Score</th>
-        <td mat-cell *matCellDef="let set">{{displayResult(set)}}</td>
+        <td mat-cell *matCellDef="let set" [ngClass]="getCellColor(set)">{{displayResult(set)}}</td>
     </ng-container>
 
     <!-- Opponent Column -->
