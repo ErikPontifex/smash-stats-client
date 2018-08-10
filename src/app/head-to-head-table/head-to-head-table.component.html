@@ -1,3 +1,59 @@
-<p>
-  head-to-head-table works!
-</p>
+<mat-form-field class="example-form">
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter By Opponent">
+</mat-form-field>
+<table mat-table 
+       matSort matSortActive="mpgrRank" matSortDisableClear matSortDirection="asc"
+       [dataSource]="globalHeadToHeadDataSource" 
+       multiTemplateDataRows 
+       class="mat-elevation-z8">
+
+  <!-- Rank Column -->
+  <ng-container matColumnDef="mpgrRank">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>MPGR Summer 2018 </th>
+    <td mat-cell *matCellDef="let set">{{set.mpgrRank}}</td>
+  </ng-container>
+
+  <!-- Rank Column -->
+  <ng-container matColumnDef="miomRank">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>MIOM Rank 2017</th>
+    <td mat-cell *matCellDef="let set">{{set.miomRank}}</td>
+  </ng-container>
+
+  <!-- Record 2018 Column -->
+  <ng-container matColumnDef="record2018">
+    <th mat-header-cell *matHeaderCellDef>Record 2018</th>
+    <td mat-cell *matCellDef="let set">{{set.playerRecord2018}} - {{set.opponentRecord2018}}</td>
+  </ng-container>
+
+  <!-- Record Column -->
+  <ng-container matColumnDef="record">
+    <th mat-header-cell *matHeaderCellDef>Record Overall</th>
+    <td mat-cell *matCellDef="let set">{{set.playerRecord}} - {{set.opponentRecord}}</td>
+  </ng-container>
+
+  <!-- Opponent Column -->
+  <ng-container matColumnDef="opponentTag">
+    <th mat-header-cell *matHeaderCellDef>Opponent</th>
+    <td mat-cell *matCellDef="let set">{{set.opponentTag}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetails">
+      <td mat-cell *matCellDef="let H2H" [attr.colspan]="displayedColumns.length">
+        <div class="example-set-detail" *ngIf="H2H === expandedH2H">
+          <mat-list dense>
+              <h3 mat-subheader>Set History</h3>
+            <mat-list-item *ngFor="let set of H2H.sets">{{displayResult(set)}} / {{set.tournamentName}} / {{set.phaseName}} - {{set.fullRoundText}} / {{set.time * 1000 | date}} </mat-list-item>
+          </mat-list>
+        </div>
+      </td>
+    </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let H2H; columns: displayedColumns;"
+      class="example-set-row"
+      (click)="onClickingH2H(H2H)"
+      >
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetails']" class="example-detail-row"></tr>
+</table>

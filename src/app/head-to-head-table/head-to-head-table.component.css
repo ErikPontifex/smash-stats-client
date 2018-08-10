@@ -1,0 +1,42 @@
+.example-form {
+    min-width: 150px;
+    width: 100%;
+  }
+
+table {
+    width: 100%;
+  }
+
+.mat-column-number,
+.mat-column-state {
+  max-width: 64px;
+}
+
+.mat-column-created {
+  max-width: 124px;
+}
+
+.example-set-detail {
+    overflow: hidden;
+    display: flex;
+  }
+  
+  tr.example-detail-row {
+    height: 0;
+  }
+  
+  tr.example-set-row:hover {
+    background: #f5f5f5;
+  }
+  
+  tr.example-set-row:active {
+    background: #efefef;
+  }
+  
+  .example-set-row td {
+    border-bottom-width: 0;
+  }
+  
+  .example-element-description {
+    padding: 16px;
+  }

@@ -28,14 +28,12 @@ export class SetTableComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['sets']) {
+    if (changes['sets'] && this.sets.length !== 0) {
       this.getSetsToDisplay();
-      console.log(this.displayedSets);
     }
   }
 
   getSetsToDisplay() {
-    console.log('getting sets to display');
     let index       =     this.paginator.pageIndex;
     let size        =     this.paginator.pageSize;
     let sort        =     this.sort.active;

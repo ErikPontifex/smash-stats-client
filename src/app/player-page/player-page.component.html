@@ -50,64 +50,6 @@
         How does {{player.gamerTag}} compare to other players?
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <mat-form-field class="example-full-width">
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter By Opponent">
-    </mat-form-field>
-    <table mat-table 
-           matSort matSortActive="mpgrRank" matSortDisableClear matSortDirection="asc"
-           [dataSource]="globalHeadToHeadDataSource" 
-           multiTemplateDataRows 
-           class="mat-elevation-z8">
-
-      <!-- Rank Column -->
-      <ng-container matColumnDef="mpgrRank">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>MPGR Summer 2018</th>
-        <td mat-cell *matCellDef="let set">{{set.mpgrRank}}</td>
-      </ng-container>
-
-      <!-- Rank Column -->
-      <ng-container matColumnDef="miomRank">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>MIOM Rank 2017</th>
-        <td mat-cell *matCellDef="let set">{{set.miomRank}}</td>
-      </ng-container>
-
-      <!-- Record 2018 Column -->
-      <ng-container matColumnDef="record2018">
-        <th mat-header-cell *matHeaderCellDef>Record 2018</th>
-        <td mat-cell *matCellDef="let set">{{set.playerRecord2018}} - {{set.opponentRecord2018}}</td>
-      </ng-container>
-
-      <!-- Record Column -->
-      <ng-container matColumnDef="record">
-        <th mat-header-cell *matHeaderCellDef>Record Overall</th>
-        <td mat-cell *matCellDef="let set">{{set.playerRecord}} - {{set.opponentRecord}}</td>
-      </ng-container>
-
-      <!-- Record Column -->
-      <ng-container matColumnDef="opponentTag">
-        <th mat-header-cell *matHeaderCellDef>Opponent</th>
-        <td mat-cell *matCellDef="let set">{{set.opponentTag}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="expandedDetail">
-          <td mat-cell *matCellDef="let set" [attr.colspan]="displayedColumnsH2H.length">
-            <div class="example-set-detail" [@detailExpand]="set == expandedSet ? 'expanded' : 'collapsed'">
-              <mat-list dense>
-                  <h3 mat-subheader>Set History</h3>
-                <mat-list-item *ngFor="let seth of set.sets">{{displayResult(seth)}} / {{seth.tournamentName}} / {{seth.phaseName}} - {{seth.fullRoundText}} / {{seth.time * 1000 | date}} </mat-list-item>
-              </mat-list>
-            </div>
-          </td>
-        </ng-container>
-
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumnsH2H"></tr>
-      <tr mat-row *matRowDef="let set; columns: displayedColumnsH2H;"
-          class="example-set-row"
-          (click)="expandedSet = expandedSet !== set ? set : null">
-      </tr>
-      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-    </table>
-
+    <head-to-head-table [sets]="sets" [playerID]="playerID"></head-to-head-table>
   </mat-expansion-panel>
 </mat-accordion>
