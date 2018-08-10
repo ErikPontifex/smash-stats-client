@@ -3,7 +3,8 @@
     <input type="text" placeholder="Select Player" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)='redirect($event.option.value.playerID)' [displayWith]="displayFn">
       <mat-option *ngFor="let option of options | async" [value]="option">
-        {{option.gamerTag}}
+        <p class="alignleft">{{option.gamerTag}}</p>
+        <p class="alignright">{{option.name}}</p>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
