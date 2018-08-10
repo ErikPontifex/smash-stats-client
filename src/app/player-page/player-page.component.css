@@ -84,3 +84,12 @@ tr.example-set-row:active {
 .example-element-description {
   padding: 16px;
 }
+
+.alignleft {
+  float: left;
+}
+
+.alignright {
+  float: right;
+  color: grey;
+}

@@ -47,9 +47,6 @@
               <mat-list-item *ngFor="let set of H2H.sets[year]">{{displayResult(set)}} / {{set.tournamentName}} / {{set.phaseName}} - {{set.fullRoundText}} / {{set.time * 1000 | date}} </mat-list-item>
             </div>
           </mat-list>
-
-          <!-- <mat-list *ngFor="let year of years" dense>
-          </mat-list> -->
         </div>
       </td>
     </ng-container>
