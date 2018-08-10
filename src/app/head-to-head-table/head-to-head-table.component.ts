@@ -14,6 +14,8 @@ export class HeadToHeadTableComponent implements OnInit {
   @Input() sets: Set[];
   @Input() playerID: number;
 
+  years = Object.keys(new HeadToHead({}).sets).reverse();
+
   globalHeadToHead: HeadToHead[] = [];
   globalHeadToHeadDataSource: MatTableDataSource<HeadToHead>;
 
@@ -66,14 +68,7 @@ export class HeadToHeadTableComponent implements OnInit {
 
     
     let year = new Date(sets[0].time * 1000).getFullYear();
-    // console.log(sets[0].time * 1000);
-    // console.log('year is ' + year);
-    // console.log(sets[0]);
-    // // headToHead.sets[year] = [];
-    // console.log(typeof headToHead.sets['2016'])
-    // headToHead.sets['2016'].push(sets[0]);
-
-    // console.log(headToHead);
+    console.log(this.years);
 
     for (let i = 0; i < sets.length; i++) {
       const set = sets[i];
@@ -99,7 +94,7 @@ export class HeadToHeadTableComponent implements OnInit {
 
       if (i+1 === sets.length || sets[i+1].opponentID !== headToHead.opponentID) {
         this.globalHeadToHead.push(headToHead);
-        console.log(headToHead);
+        // console.log(headToHead);
         headToHead = new HeadToHead({
           opponentID: sets[i+1] ? sets[i+1].opponentID : 0,
           opponentTag: sets[i+1] ? (miom[sets[i+1].opponentID] ? miom[sets[i+1].opponentID].tag  : sets[i+1].opponentTag) : '',
@@ -153,7 +148,7 @@ export class HeadToHeadTableComponent implements OnInit {
 
   onClickingH2H(H2H) {
     this.expandedH2H = this.expandedH2H !== H2H ? H2H : null;
-    console.log('expandedH2H is ');
-    console.log(this.expandedH2H);
+    // console.log('expandedH2H is ');
+    // console.log(this.expandedH2H);
   }  
 }
