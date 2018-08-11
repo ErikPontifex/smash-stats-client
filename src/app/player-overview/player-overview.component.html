@@ -1,8 +1,11 @@
 <div class="player-overview-container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title *ngIf="player">{{player.gamerTag}}</mat-card-title>
-      <mat-card-subtitle *ngIf="player.name">{{player.name}}</mat-card-subtitle>
+      <img mat-card-avatar class="header-image" [src]="imageURL">
+        <div class="header-container">
+        <mat-card-title *ngIf="player">{{player.gamerTag}}</mat-card-title>
+        <mat-card-subtitle *ngIf="player.name">{{player.name}}</mat-card-subtitle>
+      </div>
     </mat-card-header>
     <mat-card-content>
         <mat-list dense>
