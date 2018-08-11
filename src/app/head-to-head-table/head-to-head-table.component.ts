@@ -1,13 +1,21 @@
 import { Component, OnInit, SimpleChanges, ViewChild, Input } from '@angular/core';
-import { MatTableDataSource, MatSort } from '../../../node_modules/@angular/material';
+import { MatTableDataSource, MatSort } from '@angular/material';
 import { Set } from '../set/set.model';
 import { miom, mpgr } from '../rankings/rankings';
 import { HeadToHead } from '../head-to-head/head-to-head.model';
+import { trigger, state, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'head-to-head-table',
   templateUrl: './head-to-head-table.component.html',
   styleUrls: ['./head-to-head-table.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
+      state('expanded', style({ height: '*', visibility: 'visible' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class HeadToHeadTableComponent implements OnInit {
 
@@ -148,7 +156,20 @@ export class HeadToHeadTableComponent implements OnInit {
 
   onClickingH2H(H2H) {
     this.expandedH2H = this.expandedH2H !== H2H ? H2H : null;
-    // console.log('expandedH2H is ');
-    // console.log(this.expandedH2H);
-  }  
+  }
+
+  isExpansionDetailRow = (_, row: any) => row.H2H === this.expandedH2H;
+
+  setClass(H2H: HeadToHead) {
+    // expandedH2H === H2H ? 'expanded' : 'hidden';
+
+    if (this.expandedH2H == H2H) {
+      return 'expanded';
+    } else {
+      return 'hidden';
+    }
+
+
+
+  }
 }

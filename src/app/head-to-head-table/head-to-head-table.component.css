@@ -7,40 +7,75 @@ table {
     width: 100%;
   }
 
-.mat-column-number,
-.mat-column-state {
-  max-width: 64px;
-}
-
-.mat-column-created {
-  max-width: 124px;
-}
-
 .mat-list {
   display: block;
 }
 
-.example-set-detail {
+
+/* mat-column-expandedDetails,
+mat-cell.example-set-detail {
     overflow: hidden;
     display: flex;
-  }
+  } */
   
-  tr.example-detail-row {
+  /* mat-row.example-detail-row {
     height: 0;
-  }
+    min-height: 0;
+  } */
   
-  tr.example-set-row:hover {
+  mat-row:hover {
     background: #f5f5f5;
   }
   
-  tr.example-set-row:active {
+  mat-row:active {
     background: #efefef;
   }
   
-  .example-set-row td {
+  mat-row.example-set-row {
     border-bottom-width: 0;
   }
   
   .example-element-description {
     padding: 16px;
   }
+
+  mat-row {
+    position: relative;
+  }
+  
+
+mat-cell-opponentTag,
+mat-header-opponentTag {
+  display:flex;
+  justify-content:right;
+  /* padding: 20px; */
+ }
+
+mat-header-cell-miomRank,
+mat-cell-miomRank,
+mat-header-cell-mpgrRank,
+mat-cell-mpgrRank {
+  display:flex;
+  justify-content:center;
+}
+
+.hidden {
+  height: 0px;
+  min-height: 0px;
+  visibility: hidden;
+}
+
+.expanded {
+  height: '*';
+  visibility: visible;
+
+}
+
+.test {
+  height: 100px;
+}
+
+.detail-row {
+  min-height: 0px;
+  border-bottom-width: 0;
+}
