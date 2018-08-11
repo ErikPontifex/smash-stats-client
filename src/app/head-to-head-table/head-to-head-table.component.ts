@@ -74,9 +74,9 @@ export class HeadToHeadTableComponent implements OnInit {
     for (let i = 0; i < sets.length; i++) {
       const set = sets[i];
       let yearTemp = new Date(sets[i].time * 1000).getFullYear();
+
       if (year !== yearTemp) {
         year = yearTemp;
-        headToHead.sets[year] = [];
       }
       
       if (set.winnerID == this.playerID) {
