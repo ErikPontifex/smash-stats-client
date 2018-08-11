@@ -31,6 +31,7 @@ export class SetTableComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['sets'] && this.sets.length !== 0) {
       this.getSetsToDisplay();
+      this.paginator.firstPage();
     }
   }
 
@@ -60,7 +61,7 @@ export class SetTableComponent implements OnInit {
     }
   }
 
-  getCellColor(set){
+  setCellColor(set){
     if (set.winnerID == this.playerID) {
       return 'lightGreen';
     } else {
