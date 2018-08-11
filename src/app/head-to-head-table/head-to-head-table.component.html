@@ -1,6 +1,7 @@
 <mat-form-field class="example-form">
   <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter By Opponent">
 </mat-form-field>
+
 <table mat-table 
        matSort matSortActive="mpgrRank" matSortDisableClear matSortDirection="asc"
        [dataSource]="globalHeadToHeadDataSource" 
@@ -9,54 +10,55 @@
 
   <!-- Rank Column -->
   <ng-container matColumnDef="mpgrRank">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>MPGR Summer 2018 </th>
-    <td mat-cell *matCellDef="let set">{{set.mpgrRank}}</td>
+    <mat-header-cell *matHeaderCellDef mat-sort-header disableClear>MPGR S.2018 </mat-header-cell>
+    <mat-cell *matCellDef="let set">{{set.mpgrRank}}</mat-cell>
   </ng-container>
 
   <!-- Rank Column -->
   <ng-container matColumnDef="miomRank">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>MIOM Rank 2017</th>
-    <td mat-cell *matCellDef="let set">{{set.miomRank}}</td>
+    <mat-header-cell *matHeaderCellDef mat-sort-header disableClear>MIOM 2017</mat-header-cell>
+    <mat-cell *matCellDef="let set">{{set.miomRank}}</mat-cell>
   </ng-container>
 
   <!-- Record 2018 Column -->
   <ng-container matColumnDef="record2018">
-    <th mat-header-cell *matHeaderCellDef>Record 2018</th>
-    <td mat-cell *matCellDef="let set">{{set.playerRecord2018}} - {{set.opponentRecord2018}}</td>
+    <mat-header-cell *matHeaderCellDef>Record 2018</mat-header-cell>
+    <mat-cell *matCellDef="let set">{{set.playerRecord2018}} - {{set.opponentRecord2018}}</mat-cell>
   </ng-container>
 
   <!-- Record Column -->
   <ng-container matColumnDef="record">
-    <th mat-header-cell *matHeaderCellDef>Record Overall</th>
-    <td mat-cell *matCellDef="let set">{{set.playerRecord}} - {{set.opponentRecord}}</td>
+    <mat-header-cell *matHeaderCellDef>Record Overall</mat-header-cell>
+    <mat-cell *matCellDef="let set">{{set.playerRecord}} - {{set.opponentRecord}}</mat-cell>
   </ng-container>
 
   <!-- Opponent Column -->
   <ng-container matColumnDef="opponentTag">
-    <th mat-header-cell *matHeaderCellDef>Opponent</th>
-    <td mat-cell *matCellDef="let set">{{set.opponentTag}}</td>
+    <mat-header-cell *matHeaderCellDef>Opponent</mat-header-cell>
+    <mat-cell *matCellDef="let set">{{set.opponentTag}}</mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="expandedDetails">
-      <td mat-cell *matCellDef="let H2H" [attr.colspan]="displayedColumns.length">
-        <div class="example-set-detail" *ngIf="H2H === expandedH2H">
+  <!-- Expanded row -->
 
+  <ng-container matColumnDef="expandedDetail" >
+      <mat-cell *matCellDef="let H2H" [attr.colspan]="displayedColumns.length"  >
+        <div class="example-set-detail" [ngClass]="expandedH2H === H2H ? 'expanded' : 'hidden'">
           <mat-list dense>
             <div *ngFor="let year of years">
               <h3 mat-subheader *ngIf="H2H.sets[year].length > 0">Set History {{year}}</h3>
-              <mat-list-item *ngFor="let set of H2H.sets[year]">{{displayResult(set)}} / {{set.tournamentName}} / {{set.phaseName}} - {{set.fullRoundText}} / {{set.time * 1000 | date}} </mat-list-item>
+              <mat-list-item *ngFor="let set of H2H.sets[year]">{{displayResult(set)}} / {{set.tournamentName}} / {{set.phaseName}} - {{set.fullRoundText}} </mat-list-item>
             </div>
           </mat-list>
         </div>
-      </td>
+      </mat-cell>
     </ng-container>
 
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let H2H; columns: displayedColumns;"
-      class="example-set-row"
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let H2H; columns: displayedColumns;"
+      class="H2H-row"
       (click)="onClickingH2H(H2H)"
       >
-  </tr>
-  <tr mat-row *matRowDef="let row; columns: ['expandedDetails']" class="example-detail-row"></tr>
+  </mat-row>
+  <mat-row *matRowDef="let row; columns: ['expandedDetail'];" style="overflow:hidden" class="detail-row"></mat-row>
 </table>
