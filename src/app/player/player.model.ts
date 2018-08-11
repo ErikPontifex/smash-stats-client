@@ -7,6 +7,14 @@ export class Player {
     country: String;
     state: String;
     region: String;
+    images: [{ id : number,
+               width : number,
+               height: number,
+               ratio : number,
+               type : string,
+               url : string,
+               isOriginal : boolean
+            }];
 
 
     constructor(obj?: any){
