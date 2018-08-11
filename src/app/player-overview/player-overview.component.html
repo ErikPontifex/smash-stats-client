@@ -1,4 +1,5 @@
-<mat-card>
+<div class="player-overview-container">
+  <mat-card>
     <mat-card-header>
       <mat-card-title *ngIf="player">{{player.gamerTag}}</mat-card-title>
       <mat-card-subtitle *ngIf="player.name">{{player.name}}</mat-card-subtitle>
@@ -13,3 +14,4 @@
         </mat-list>
     </mat-card-content>
   </mat-card>
+</div>

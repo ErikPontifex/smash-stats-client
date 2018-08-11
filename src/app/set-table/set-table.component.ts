@@ -10,6 +10,7 @@ import { Set } from '../set/set.model';
 })
 export class SetTableComponent implements OnInit {
   @Input() sets;
+  @Input() playerID;
   
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -30,6 +31,7 @@ export class SetTableComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['sets'] && this.sets.length !== 0) {
       this.getSetsToDisplay();
+      this.paginator.firstPage();
     }
   }
 
@@ -56,6 +58,14 @@ export class SetTableComponent implements OnInit {
       return set.opponentID === set.loserID ? 'won' : 'lost';
     } else {
       return set.playerScore + " - " + set.opponentScore;
+    }
+  }
+
+  setCellColor(set){
+    if (set.winnerID == this.playerID) {
+      return 'lightGreen';
+    } else {
+      return 'lightRed';
     }
   }
 

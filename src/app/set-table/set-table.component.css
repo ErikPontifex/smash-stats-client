@@ -1,19 +1,37 @@
 .example-table-container {
     position: relative;
-    /* max-height: 400px; */
     overflow: auto;
 }
-
-/* Column Widths */
-.mat-column-number,
-.mat-column-state {
-  max-width: 64px;
+mat-cell,
+mat-header-cell {
+  /* display:flex;
+  justify-content:center; */
+  padding: 20px;
+ }
+ 
+mat-header-cell-playerRecord,
+mat-cell-playerRecord {
+  display:flex;
+  justify-content:center;
 }
 
-.mat-column-created {
-  max-width: 124px;
+mat-header-cell:first-child,
+mat-cell:first-child {
+  max-width: 75px;
+}
+
+mat-row {
+  align-items: stretch;
 }
 
 table {
     width: 100%;
-  }
+}
+
+.lightGreen {
+  background-color: lightgreen
+}
+
+.lightRed {
+  background-color: lightcoral;
+}

@@ -12,7 +12,7 @@
 
 <player-overview [player]="player"></player-overview>
 <mat-accordion>
-  <mat-expansion-panel [expanded]=false>
+  <mat-expansion-panel [expanded]=true>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Sets
@@ -25,10 +25,10 @@
       <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
         <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
       </div>
-      <set-table [sets]="sets"></set-table>
+      <set-table [sets]="sets" [playerID]="playerID"></set-table>
     </div>
   </mat-expansion-panel>
-  <mat-expansion-panel [expanded]=true>
+  <mat-expansion-panel [expanded]=false>
     <mat-expansion-panel-header>
       <mat-panel-title>
         Head-To-Head
