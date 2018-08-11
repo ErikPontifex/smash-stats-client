@@ -20,8 +20,8 @@ export class HeadToHead {
         this.opponentRecord     = obj && obj.opponentRecord     || 0,
         this.playerRecord2018   = obj && obj.playerRecord2018   || 0,
         this.opponentRecord2018 = obj && obj.opponentRecord2018 || 0,
-        this.miomRank           = obj && obj.miomRank           || 'unranked',
-        this.mpgrRank           = obj && obj.mpgrRank           || 'unranked'
+        this.miomRank           = obj && obj.miomRank           || '-',
+        this.mpgrRank           = obj && obj.mpgrRank           || '-'
 
     }
 }

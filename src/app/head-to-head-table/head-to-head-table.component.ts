@@ -62,8 +62,8 @@ export class HeadToHeadTableComponent implements OnInit {
     let headToHead = new HeadToHead({
       opponentID: sets[0]!.opponentID,
       opponentTag: miom[sets[0]!.opponentID] ? miom[sets[0]!.opponentID].tag : sets[0]!.opponentTag,
-      miomRank: miom[sets[0]!.opponentID] ? miom[sets[0]!.opponentID].rank : 'unranked',
-      mpgrRank: mpgr[sets[0]!.opponentID] ? mpgr[sets[0]!.opponentID].rank : 'unranked'
+      miomRank: miom[sets[0]!.opponentID] ? miom[sets[0]!.opponentID].rank : '-',
+      mpgrRank: mpgr[sets[0]!.opponentID] ? mpgr[sets[0]!.opponentID].rank : '-'
     });
 
     
@@ -98,8 +98,8 @@ export class HeadToHeadTableComponent implements OnInit {
         headToHead = new HeadToHead({
           opponentID: sets[i+1] ? sets[i+1].opponentID : 0,
           opponentTag: sets[i+1] ? (miom[sets[i+1].opponentID] ? miom[sets[i+1].opponentID].tag  : sets[i+1].opponentTag) : '',
-          miomRank: sets[i+1] ? (miom[sets[i+1]!.opponentID] ? miom[sets[i+1]!.opponentID].rank : 'unranked') : '',
-          mpgrRank: sets[i+1] ? (mpgr[sets[i+1]!.opponentID] ? mpgr[sets[i+1]!.opponentID].rank : 'unranked') : ''
+          miomRank: sets[i+1] ? (miom[sets[i+1]!.opponentID] ? miom[sets[i+1]!.opponentID].rank : '-') : '',
+          mpgrRank: sets[i+1] ? (mpgr[sets[i+1]!.opponentID] ? mpgr[sets[i+1]!.opponentID].rank : '-') : ''
         });
       }      
     }
